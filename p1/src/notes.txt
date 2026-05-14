@@ -1,0 +1,43 @@
+Task1:
+Struktura pliku: Pamiętaj, aby nazwa pliku .java odpowiadała nazwie klasy public. Jeśli nazwiesz plik MojeZadanie.java, zmień public class Solution na public class MojeZadanie.
+
+Obsługa błędów: W Zadaniu 4 w wersji OptimizedForMemory użyłem try-with-resources (try (BufferedReader br = ...)). To bardzo ważne, bo automatycznie zamyka plik, nawet jeśli wystąpi błąd. Wykładowcy to kochają.
+
+Metoda fromCsvLine: Kluczem jest tutaj obsługa tabulatora i myślników. Użycie .trim() rozwiązuje problem tabulatora, a prosty if obsługuje myślniki jako zera.
+
+Kryterium ICD-10: W Zadaniu 4 zaimplementowałem metodę isValidICD10. Sprawdza ona, czy linia zaczyna się od litery i dwóch cyfr (np. A01), co pozwala odsiać śmieciowe linie z pliku opisu.
+
+
+
+
+Task2:
+Metoda updateHands() w klasie Clock: Zastosowałem tutaj wzorzec, w którym klasa bazowa wymusza na potomnych wykonanie akcji po zmianie stanu (czasu). Dzięki temu setTime zawsze aktualizuje grafikę.
+
+Ruch ciągły wskazówek: Zwróć uwagę na obliczenia w MinuteHand i HourHand. Dzielenie przez 60.0 (z kropką!) jest kluczowe, aby Java nie wykonała dzielenia całkowitoliczbowego (które obcięłoby ułamki i zepsuło płynność ruchu).
+
+Polimorfizm w AnalogClock: Lista List<ClockHand> pozwala na eleganckie zarządzanie wszystkimi wskazówkami w pętlach. Jeśli na kolokwium będziesz musiał dodać np. "wskazówkę milisekundową", po prostu dopiszesz nową klasę i dodasz ją do listy – reszta kodu pozostanie bez zmian.
+
+Generowanie plików (I/O): Files.createDirectory i Files.writeString to najszybsze metody w nowszych wersjach Javy. Pamiętaj, że operacje na plikach zawsze muszą być w bloku try-catch.
+
+Przesunięcia czasowe: W metodzie generateAnalogClocksSvg dodałem (h + tz) % 24, aby zegar nie pokazywał np. 26:00, gdy dodamy strefę czasową do późnej godziny.
+
+
+
+
+
+
+Task3:
+Klasa bazowa decyduje o typie potomka (Product.fromPrefix):
+To bardzo częsty wzorzec. Zauważ, że metoda statyczna w klasie Product przeszukuje dysk, ale zwraca obiekty klas FoodProduct lub NonFoodProduct. Dzięki temu użytkownik tej metody nie musi wiedzieć, w którym folderze leży dany towar.
+
+Wyjątek z dodatkowymi danymi:
+W zadaniu z miastami (poprzednie kolokwium) tylko rzucaliśmy błąd. Tutaj w AmbigiousProductException przechowujemy listę nazw. Dzięki temu w bloku catch możemy wypisać użytkownikowi: "Hej, wpisałeś 'Ja', ale mam: [Jajka, Jabłka]. Co konkretnie miałeś na myśli?".
+
+Mapa wewnątrz obiektu (regionalPrices):
+W klasie FoodProduct nie mamy jednej tablicy Double[], tylko mapę. To pokazuje, że klasy dziedziczące mogą mieć zupełnie inne struktury wewnętrzne, dopóki dostarczają to, co obiecały w metodzie abstrakcyjnej (getPrice).
+
+Uproszczone daty:
+Wykładowca kazał założyć, że dane są od stycznia 2010. Formuła (rok - 2010) * 12 + (miesiąc - 1) to najbezpieczniejszy sposób na przeliczenie daty na indeks tablicy w takich zadaniach.
+
+Files.lines vs Scanner:
+W Twoim pliku NonFoodProduct.java był Scanner. W moim rozwiązaniu użyłem Files.readAllLines – jest to szybsze i bardziej nowoczesne w Javie (wymaga mniej linijek kodu do przeczytania całego pliku).
