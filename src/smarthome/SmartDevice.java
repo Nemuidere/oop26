@@ -1,6 +1,6 @@
 package smarthome;
 
-public class SmartDevice {
+public class SmartDevice implements Comparable<SmartDevice> {
     private final String id;
     private final String name;
     private final String room;
@@ -35,6 +35,24 @@ public class SmartDevice {
         return firmwareVersion;
     }
 
+        @Override
+    public int compareTo(SmartDevice other) {
+        int byName = this.name.compareTo(other.name);
+        if (byName != 0) {
+            return byName;
+        }
+        if (this.room == null && other.room == null) {
+            return 0;
+        }
+        if (this.room == null) {
+            return -1;
+        }
+        if (other.room == null) {
+            return 1;
+        }
+        return this.room.compareTo(other.room);
+    }
+
     public static class Builder {
         private final String id;
         private final String name;
@@ -53,6 +71,12 @@ public class SmartDevice {
         }
 
         public Builder withMacAddress(String macAddress) {
+            if (macAddress == null
+                    || macAddress.length() != 17
+                    || !macAddress.contains(":")) {
+                throw new InvalidMacAddressException(
+                        "Niewłaściwy format adresu MAC: " + macAddress);
+            }
             this.macAddress = macAddress;
             return this;
         }
