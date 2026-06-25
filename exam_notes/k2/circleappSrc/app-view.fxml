@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ZADANIE 1 — widok aplikacji.
+
+  WAŻNE: brak atrybutu fx:controller. Kontroler ma konstruktor z parametrami (Zad.4),
+  więc jego instancję ustawiamy w kodzie: loader.setController(new Controller(server, serverThread)).
+  Gdyby kontroler miał konstruktor bezargumentowy, można by tu dopisać:
+      fx:controller="com.example.circleapp.Controller"
+
+  fx:id muszą zgadzać się z polami @FXML w kontrolerze: canvas, colorPicker, radiusSlider.
+  onMouseClicked="#onMouseClicked" podpina metodę kontrolera do kliknięcia w kanwę.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <children>
+                <Label text="Kolor:"/>
+                <ColorPicker fx:id="colorPicker"/>
+                <Label text="Promień:"/>
+                <Slider fx:id="radiusSlider" min="5" max="60" value="20" prefWidth="220"
+                        showTickLabels="true" showTickMarks="true"/>
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <Canvas fx:id="canvas" width="640" height="420" onMouseClicked="#onMouseClicked"/>
+    </center>
+</BorderPane>
