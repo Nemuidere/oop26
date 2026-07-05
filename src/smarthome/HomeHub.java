@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class HomeHub {
     private static HomeHub instance;
-    private List<SmartDevice> devices;
+    private List<ManageableDevice> devices;
     private HomeHub() {
         devices = new ArrayList<>();
     }
@@ -20,12 +20,13 @@ public class HomeHub {
     }
 
     public void registerDevice(SmartDevice device) throws DuplicateDeviceException {
-        for (SmartDevice existing : devices) {
-            if (existing.getId().equals(device.getId())) {
+        for (ManageableDevice existing : devices) {
+            SmartDevice existingDevice = (SmartDevice) existing;
+            if (existingDevice.getId().equals(device.getId())) {
                 throw new DuplicateDeviceException("Urządzenie o id " + device.getId() + " już istnieje.");
             }
             if (device.getMacAddress() != null
-                    && device.getMacAddress().equals(existing.getMacAddress())) {
+                    && device.getMacAddress().equals(existingDevice.getMacAddress())) {
                 throw new DuplicateDeviceException("Urządzenie o adresie MAC " + device.getMacAddress() + " już istnieje.");
             }
         }
@@ -34,9 +35,10 @@ public class HomeHub {
 
     public List<SmartDevice> getDevicesByRoom(String room) {
         List<SmartDevice> result = new ArrayList<>();
-        for (SmartDevice device : devices) {
-            if (Objects.equals(room, device.getRoom())) {
-                result.add(device);
+        for (ManageableDevice device : devices) {
+            SmartDevice smartDevice = (SmartDevice) device;
+            if (Objects.equals(room, smartDevice.getRoom())) {
+                result.add(smartDevice);
             }
         }
         Collections.sort(result);

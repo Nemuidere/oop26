@@ -1,6 +1,6 @@
 package smarthome;
 
-public class SmartDevice implements Comparable<SmartDevice> {
+public class SmartDevice implements Comparable<SmartDevice>, ManageableDevice {
     private final String id;
     private final String name;
     private final String room;
@@ -33,6 +33,21 @@ public class SmartDevice implements Comparable<SmartDevice> {
 
     public double getFirmwareVersion() {
         return firmwareVersion;
+    }
+
+    @Override
+    public void turnOn() {
+        System.out.println("Urządzenie " + name + " zostało włączone.");
+    }
+
+    @Override
+    public void turnOff() {
+        System.out.println("Urządzenie " + name + " zostało wyłączone.");
+    }
+
+    @Override
+    public String getStatus() {
+        return "Urządzenie " + name + " (id: " + id + ") jest gotowe do pracy.";
     }
 
         @Override
