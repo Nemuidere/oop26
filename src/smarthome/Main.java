@@ -22,6 +22,12 @@ public class Main {
             System.out.println("Adapter termostatu zarejestrowany poprawnie.");
             thermostatAdapter.turnOn();
             System.out.println(thermostatAdapter.getStatus());
+
+            SmartDevice bulb2 = DeviceFactory.createLivingRoomBulb("d3", "Lampa kuchenna");
+            ManageableDevice monitoredBulb = new EnergyMonitoringDecorator(bulb2);
+            hub.registerDevice(monitoredBulb);
+            System.out.println("Monitorowana zarowka zarejestrowana poprawnie.");
+            monitoredBulb.turnOn();
         } catch (DuplicateDeviceException e) {
             System.out.println("Blad: " + e.getMessage());
         }
