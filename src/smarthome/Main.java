@@ -15,6 +15,13 @@ public class Main {
             SmartDevice bulb = DeviceFactory.createLivingRoomBulb("d2", "Lampa salonowa");
             hub.registerDevice(bulb);
             System.out.println("Urzadzenie zarejestrowane poprawnie.");
+
+            LegacyThermostat legacyThermostat = new LegacyThermostat();
+            ThermostatAdapter thermostatAdapter = new ThermostatAdapter(legacyThermostat);
+            hub.registerDevice(thermostatAdapter);
+            System.out.println("Adapter termostatu zarejestrowany poprawnie.");
+            thermostatAdapter.turnOn();
+            System.out.println(thermostatAdapter.getStatus());
         } catch (DuplicateDeviceException e) {
             System.out.println("Blad: " + e.getMessage());
         }
