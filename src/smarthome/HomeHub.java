@@ -38,6 +38,10 @@ public class HomeHub {
         devices.add(device);
     }
 
+    public List<ManageableDevice> getAllDevices() {
+        return devices;
+    }
+
     public List<SmartDevice> getDevicesByRoom(String room) {
         List<SmartDevice> result = new ArrayList<>();
         for (ManageableDevice device : devices) {

@@ -28,6 +28,10 @@ public class Main {
             hub.registerDevice(monitoredBulb);
             System.out.println("Monitorowana zarowka zarejestrowana poprawnie.");
             monitoredBulb.turnOn();
+
+            SmartHomeFacade facade = new SmartHomeFacade(hub);
+            facade.movieMode();
+            facade.goodNightRoutine();
         } catch (DuplicateDeviceException e) {
             System.out.println("Blad: " + e.getMessage());
         }
